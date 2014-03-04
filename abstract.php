@@ -1,5 +1,5 @@
 <?php
-include('header.htm');
+include('header.php');
 ?>
 <div class='container' style='background-color:white' >
 <form method="POST" action="checkabs.php" id="absForm">
