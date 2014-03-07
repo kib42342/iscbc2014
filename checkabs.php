@@ -91,36 +91,15 @@ Upload Abstract:
 <h4 >Session of choice:</h4>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>1<sup>st</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session1" class="form-control" name="session1">
-	<?php 
-$session=<<<SESSION
-	<option value="Neuroscience">Neuroscience</option>
-	<option value="Cancer Biology">Cancer Biology</option>
-	<option value="Applied and Clinical Anatomy">Applied and Clinical Anatomy</option>
-	<option value="Microscopy">Microscopy</option>
-	<option value="Stem Cell Biology">Stem Cell Biology</option>
-	<option value="Education">Education</option>
-	<option value="Others">Others</option>
-SESSION;
-echo $session;
-?>
-</select></div>
+	<div class="col-md-2"><p class='text-primary'><?php echo $form->session1;?></p></div>
 </div>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>2<sup>nd</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session2" class="form-control" name="session2">
-	<?php
-echo $session;
-?>
-</select></div>
+	<div class="col-md-2"><p class='text-primary'><?php echo $form->session2;?></p></div>
 </div>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>3<sup>rd</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session3" class="form-control" name="session3">
-<?php
-echo $session;
-?>
-</select></div>
+	<div class="col-md-2"><p class='text-primary'><?php echo $form->session3;?></p></div>
 </div>
 <p class='text-danger'>Please notice that we can't guarantee that the preferred choice is available. The Scientific committee reserves the right to assign it to a proper session or format of presentation.</p>
 <div class="text-center">
