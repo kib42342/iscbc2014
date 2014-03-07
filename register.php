@@ -15,7 +15,15 @@ include('header.php');
 <li>If there is any problem regarding registration, please contact <a href="mailto:guofang@mail.tcu.edu.tw">guofang@mail.tcu.edu.tw</a>.</li>
 </ol>
 <hr />
-<form method="POST" action="#" class="form-horizontal" role="form">
+<noscript><br /><h1 class="text-danger text-center">Sorry, your browser does not support javascript!<br />Go back and use another browser.</h1><br />
+<div class="btn-group btn-block">
+
+<a href="<?php echo $_SERVER['HTTP_REFERER'];?>" ><button type="button" class="btn btn-primary btn-block" >
+Back
+</button></a>
+</div>
+</noscript>
+<form method="POST" action="#" class="form-horizontal" role="form" id="regForm" hidden>
 <h4>PERSONAL INFORMATION</h4>
 <div class="form-group">
   <label class="col-md-2 text-right" for="inputfamilyname">Family Name: </label>
@@ -130,48 +138,42 @@ include('header.php');
 <div class="form-group">
   <div class="col-md-offset-1 col-md-9 radio-inline">
 <label >
-<input type="radio" name="pay" class="form-control" value="Invited Speaker">Invited Speaker
+<input type="radio" name="pay" class="form-control" value="Invited Speaker" onclick="notStudent();" required >Invited Speaker
 </label><br />
 <hr />
 <h5>Regular, non-Taiwanese</h5>
 <label >
-<input type="radio" name="pay" class="form-control" value="Regular" checked>Regular:$10000 NT (equal to approximately 333 USD)
+<input type="radio" name="pay" class="form-control" value="Regular" onclick="notStudent();" required >Regular:$10000 NT (equal to approximately 333 USD)
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Postdoc">Postdoc: $6000 NT (equal to approximately 200 USD)
+<input type="radio" name="pay" class="form-control" value="Postdoc" onclick="notStudent();" required>Postdoc: $6000 NT (equal to approximately 200 USD)
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Student" >Student: $3000 NT (equal to approximately 100 USD)
+<input type="radio" name="pay" class="form-control" value="Student" onclick="isStudent();" required >Student: $3000 NT (equal to approximately 100 USD)
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Traveling">Traveling fellowship
+<input type="radio" name="pay" class="form-control" value="Traveling" onclick="notStudent();" required >Traveling fellowship
 </label><br />
 <p>Postdoc and Student presenting poster can apply for traveling fellowship, please write to <a href="mailto:guofang@mail.tcu.edu.tw">guofang@mail.tcu.edu.tw</a></p>
 <hr />
 <h5>Local participant (Taiwan)</h5>
 <label >
-<input type="radio" name="pay" class="form-control" value="Regular(Taiwan)" >Regular: $1500 NT
+<input type="radio" name="pay" class="form-control" value="Regular(Taiwan)" onclick="notStudent();"  required >Regular: $1500 NT
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Postdoc(Taiwan)">Postdoc: $1000 NT
+<input type="radio" name="pay" class="form-control" value="Postdoc(Taiwan)" onclick="notStudent();" required >Postdoc: $1000 NT
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Student(Taiwan)">Student: waived
+<input type="radio" name="pay" class="form-control" value="Student(Taiwan)" onclick="isStudent();" required >Student: waived
 </label>
 <hr />
 </div>
 </div>
 <div class="row" id="isstudent">
-<div class="col-md-10 col-md-offset-1" style="border:2px solid red">
-<p> </p>
-    <label class="text-danger" for="photoid">Student please upload your photo ID (*.jpg,*.bmp,*.png; size < 150 KB).</label>
-    <input type="file" id="photoid" name="photoid">
-<p> </p>
-</div>
   </div>
 <p> </p>
 <div class="row">
-  <div class="col-md-12 text-center"><input type="submit" name="submit" id="submit" value="Submit" class="form-control"></div>
+  <div class="col-md-12 text-center"><input type="submit" name="submit" id="submit" value="Submit" class="form-control btn btn-primary"></div>
 </div>
 </form>
 <br />
@@ -181,5 +183,32 @@ include('header.php');
 </div>
 
 <?php
-include('footer.htm');
+$script=<<<SCRI
+<script>
+var student_id = '<div id="std" class="col-md-10 col-md-offset-1" style="border:2px solid red"> \
+<p> </p> \
+    <label class="text-danger" for="photoid">Student please upload your photo ID (*.jpg,*.bmp,*.png; size < 150 KB).</label> \
+    <input type="file" id="photoid" name="photoid" required> \
+<p> </p>\
+</div>';
+
+function isStudent(){
+ $("#isstudent").html("");
+ $("#isstudent").append(student_id);
+};
+function notStudent(){
+ $("#isstudent").html("");
+};
+
+$(function(){
+$("#regForm").show();
+
+
+});
+
+</script>
+
+
+SCRI;
+include('footer.php');
 ?>

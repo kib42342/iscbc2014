@@ -1,7 +1,8 @@
 <?php
-$form=$_POST;
+$form=(object)$_POST;
 echo var_dump($form);
-var_dump( $form->author[0]);
+echo $form->author[0];
+echo $form->affiliations[0];
 /*
 include('header.php');
 ?>

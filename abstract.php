@@ -3,7 +3,8 @@ include('header.php');
 
 ?>
 <div class='container' style='background-color:white' >
-<form method="POST" action="checkabs.php" id="absForm" enctype="multipart/form-data">
+<noscript><br /><h1 class="text-danger text-center">Sorry, your browser does not support javascript!</h1><br /></noscript>
+<form method="POST" action="checkabs.php" id="absForm" enctype="multipart/form-data" hidden >
 <div class='row'>
 <h1 class='col-md-12 text-center'>Abstract Guideline</h1>
 </div>
@@ -19,11 +20,11 @@ include('header.php');
 		<th>E-mail</td>
 	</tr>
 <tr>
-<td><input name="author[]" type="text" placeholder="Input author's name" class="form-control" required maxlength="100"/></td>
-<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations" class="form-control" required  maxlength="255" /></td>
+<td><input name="author[]" type="text" placeholder="Input author's name*" class="form-control" required maxlength="100"/></td>
+<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations*" class="form-control" required  maxlength="255" /></td>
 <td><input name="presenting_first" type="checkbox" value="yes" class="form-control" checked disabled /></td>
 <input name="presenting[]" type="hidden" value="yes" class="form-control" required /></td>
-<td><input name="email[]" type="email" placeholder="Input author's email" class="form-control" required maxlength="100" /></td>
+<td><input name="email[]" type="email" placeholder="Input author's email*" class="form-control" required maxlength="100" /></td>
 </tr>
 </table>
 
@@ -37,7 +38,7 @@ include('header.php');
 <hr />
 <h4>Keywords:</h4>
 <div class="row">
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 1" class="form-control" required maxlength="100"/></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 1*" class="form-control" required maxlength="100"/></div>
 	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 2" class="form-control"  maxlength="100"/></div>
 	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 3" class="form-control"  maxlength="100"/></div>
 	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 4" class="form-control"  maxlength="100"/></div>
@@ -47,7 +48,7 @@ include('header.php');
 <div class="form-group">
  <div class="col-md-2 text-right">
  <label for="abstract_file">
-Upload Abstract:
+Upload Abstract<sup class="text-danger">*</sup>:
 </label>
 </div>
   <div class="col-md-10"><input type="hidden" name="MAX_FILE_SIZE" value="5000" /><input type="file" name='abstract_file' required />
@@ -60,7 +61,7 @@ Upload Abstract:
 
 
 <hr />
-<h4>Choice of presentation:</h4>
+<h4>Choice of presentation<sup class="text-danger">*</sup>:</h4>
 <div class="row">
   <div class="col-md-1"><input type="radio" name='presentation' required /> Oral</div>
   <div class="col-md-1"><input type="radio" name='presentation' required /> Poster</div>
@@ -68,12 +69,13 @@ Upload Abstract:
 	
 	
 
-<h4 >Session of choice:</h4>
+<h4 >Session of choice<sup class="text-danger">*</sup>:</h4>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>1<sup>st</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session1" class="form-control" name="session1">
+	<div class="col-md-2"><select id="session1" class="form-control" name="session1" required>
 	<?php 
 $session=<<<SESSION
+	<option value="">Please select...</option>
 	<option value="Neuroscience">Neuroscience</option>
 	<option value="Cancer Biology">Cancer Biology</option>
 	<option value="Applied and Clinical Anatomy">Applied and Clinical Anatomy</option>
@@ -88,7 +90,7 @@ echo $session;
 </div>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>2<sup>nd</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session2" class="form-control" name="session2">
+	<div class="col-md-2"><select id="session2" class="form-control" name="session2" required>
 	<?php
 echo $session;
 ?>
@@ -96,7 +98,7 @@ echo $session;
 </div>
 <div class="row">
 	<div class="col-md-2"><p class='text-right'>3<sup>rd</sup> choice:</p></div>
-	<div class="col-md-2"><select id="session3" class="form-control" name="session3">
+	<div class="col-md-2"><select id="session3" class="form-control" name="session3" required>
 <?php
 echo $session;
 ?>
@@ -122,13 +124,14 @@ $script=<<<SCRI
 <script>
 
 var footer = '<tr>\
-	<td><input name="author[]" type="text" placeholder="Input author\'s name" class="form-control" required /></td>\
-	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations" class="form-control" required /></td>\
+	<td><input name="author[]" type="text" placeholder="Input author\'s name*" class="form-control" required /></td>\
+	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations*" class="form-control" required /></td>\
 	<td><input name="presenting[]" type="checkbox" class="form-control" ></td>\
-	<td><input name="email[]" type="email" placeholder="Input author\'s email" class="form-control" required /></td>\
+	<td><input name="email[]" type="email" placeholder="Input author\'s email*" class="form-control" required /></td>\
 		</tr>';
 
 $(function(){
+$("#absForm").show();
 var x;
 x=$("#addauthors").html();
 $("#addauthor").click(function(){
@@ -145,12 +148,7 @@ $("#addauthors").html(x);
 
 
 SCRI;
-/*
-<script>
-$("#absForm").validate();
-</script>
- */
-?>
-<?php
+
+
 include('footer.php');
 ?>
