@@ -20,11 +20,10 @@ include('header.php');
 		<th>E-mail</td>
 	</tr>
 <tr>
-<td><input name="author[]" type="text" placeholder="Input author's name*" class="form-control" required maxlength="100"/></td>
-<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations*" class="form-control" required  maxlength="255" /></td>
-<td><input name="presenting_first" type="checkbox" value="yes" class="form-control" checked disabled /></td>
-<input name="presenting[]" type="hidden" value="yes" class="form-control" required /></td>
-<td><input name="email[]" type="email" placeholder="Input author's email*" class="form-control" required maxlength="100" /></td>
+<td><input name="author[0]" type="text" placeholder="Input author's name*" class="form-control" required maxlength="100"/></td>
+<td><input name="affiliations[0]" type="text" placeholder="Input author's affiliations*" class="form-control" required  maxlength="255" /></td>
+<td><input name="presenting_first" type="checkbox" value="yes" class="form-control" checked disabled /><input name="presenting[0]" type="hidden" value="yes" /></td>
+<td><input name="email[0]" type="email" placeholder="Input author's email*" class="form-control" required maxlength="100" /></td>
 </tr>
 </table>
 
@@ -63,8 +62,8 @@ Upload Abstract<sup class="text-danger">*</sup>:
 <hr />
 <h4>Choice of presentation<sup class="text-danger">*</sup>:</h4>
 <div class="row">
-  <div class="col-md-1"><input type="radio" name='presentation' required /> Oral</div>
-  <div class="col-md-1"><input type="radio" name='presentation' required /> Poster</div>
+  <div class="col-md-1"><input type="radio" name='presentation' value='Oral' required /> Oral</div>
+  <div class="col-md-1"><input type="radio" name='presentation' value='Poster' required /> Poster</div>
 </div>
 	
 	
@@ -123,21 +122,31 @@ echo $session;
 $script=<<<SCRI
 <script>
 
+var checkbox_num = 1;
+function addauthor(checkbox_num){
+
 var footer = '<tr>\
-	<td><input name="author[]" type="text" placeholder="Input author\'s name*" class="form-control" required /></td>\
-	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations*" class="form-control" required /></td>\
-	<td><input name="presenting[]" type="checkbox" class="form-control" ></td>\
-	<td><input name="email[]" type="email" placeholder="Input author\'s email*" class="form-control" required /></td>\
+	<td><input name="author['+checkbox_num+']" type="text" placeholder="Input author\'s name*" class="form-control" required /></td>\
+	<td><input name="affiliations['+checkbox_num+']" type="text" placeholder="Input author\'s affiliations*" class="form-control" required /></td>\
+	<td> \
+<input name="presenting['+checkbox_num+']" type="hidden" value="no" > \
+<input name="presenting['+checkbox_num+']" type="checkbox" class="form-control" value="yes" ></td>\
+	<td><input name="email['+checkbox_num+']" type="email" placeholder="Input author\'s email*" class="form-control" required /></td>\
 		</tr>';
+return footer;
+
+}
 
 $(function(){
 $("#absForm").show();
 var x;
 x=$("#addauthors").html();
 $("#addauthor").click(function(){
-$("#addauthors").append(footer);
+$("#addauthors").append(addauthor(checkbox_num));
+checkbox_num++;
 });
 $("#delauthor").click(function(){
+checkbox_num=1;
 $("#addauthors").html(x);
 });
 

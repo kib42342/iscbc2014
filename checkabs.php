@@ -1,13 +1,11 @@
 <?php
 $form=(object)$_POST;
-echo var_dump($form);
-echo $form->author[0];
-echo $form->affiliations[0];
-/*
+//var_dump($_POST)."<BR />";
+var_dump($form);
+
 include('header.php');
 ?>
 <div class='container' style='background-color:white' >
-<form method="POST" action="checkabs.php" id="absForm">
 <div class='row'>
 <h1 class='col-md-12 text-center'>Abstract guideline</h1>
 </div>
@@ -22,30 +20,47 @@ include('header.php');
 		<th>Presenting author</td>
 		<th>E-mail</td>
 	</tr>
-	<?php
-
-?>
+<?php
+$author_format = <<<AUTHOR
 <tr>
-<td><input name="author[]" type="text" placeholder="Input author's name" class="form-control" required /></td>
-<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations" class="form-control" required  /></td>
-<td><input name="presenting_first" type="checkbox" value="yes" class="form-control"  checked  disabled />
-<input name="presenting[]" type="hidden" value="yes" class="form-control" required checked /></td>
-<td><input name="email[]" type="email" placeholder="Input author's email" class="form-control" required  /></td>
+	<td>
+	<p>%s</p>
+	</td>
+	<td>
+	<p>%s</p>
+	</td>
+<td>
+<p>%s</p>
+</td>
+<td>
+<p>%s</p>
+</td>
 </tr>
+AUTHOR;
+$glyphicon="<p><span class='glyphicon glyphicon-check'></span> Presenting author</p>";
+foreach($form->author as $akey=>$author){
+
+	isset($form->presenting[$akey]) && $form->presenting[$akey] == "yes" ?  $checked=$glyphicon : $checked="" ;
+	$authors = isset($author) && !empty($author) ? sprintf($author_format,$author,$form->affiliations[$akey],$checked,$form->email[$akey]) : "";
+	echo $authors;
+
+}
+?>
 </table>
 
-
-<button type="button" class="btn btn-default btn-md btn-md-offset-11" id='addauthor' >
-  <span class="glyphicon glyphicon-plus"></span> Add more authors
-</button>
 <hr />
 <h4>Keywords:</h4>
 <div class="row">
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 1" class="form-control" required /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 2" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 3" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 4" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 5" class="form-control" /></div>
+<div class="col-md-2 col-md-offset-1">
+<em class="text-primary"><strong>
+<?php 
+foreach ($form->keyword as $kkey=>$keyword){
+	!empty($keyword) && $kkey != 0 ? $dot=", " : $dot="";
+echo $dot.$keyword;
+}
+?>
+</strong></em>
+</div>
 </div>
 <hr />
 <div class="form-group">
@@ -54,7 +69,9 @@ include('header.php');
 Upload Abstract:
 </label>
 </div>
-  <div class="col-md-10"><input type="file" name='abstract_file' required >
+  <div class="col-md-10">
+  <?php //if($_FILES['abstract_file'][''])?>
+<p class="text-primary"><?php echo $_FILES['abstract_file']['name'].$_FILES['abstract_file']['type'];?></p>
 <p class='text-danger'>
 ( PDF, less than 250 words. Acknowledgement for support etc. please attached at the end of the text in parenthesis )
 </p>
@@ -66,8 +83,7 @@ Upload Abstract:
 <hr />
 <h4>Choice of presentation:</h4>
 <div class="row">
-  <div class="col-md-1"><input type="radio" name='presentation' required /> Oral</div>
-  <div class="col-md-1"><input type="radio" name='presentation' required /> Poster</div>
+<div class="col-md-1 col-md-offset-1"><p class="text-primary"><?php echo $form->presentation;?></p></div>
 </div>
 	
 	
@@ -106,7 +122,7 @@ echo $session;
 ?>
 </select></div>
 </div>
-<p class='text-danger'>Please notice that we can’t guarantee that the preferred choice is available. The Scientific committee reserves the right to assign it to a proper session or format of presentation.</p>
+<p class='text-danger'>Please notice that we can't guarantee that the preferred choice is available. The Scientific committee reserves the right to assign it to a proper session or format of presentation.</p>
 <div class="text-center">
 <input type="submit"  value='Submit' class="form-control" >
 
@@ -115,28 +131,14 @@ echo $session;
 <br />
 <br />
 
-</form>
 </div>
 <br />
 <br />
 <?php
 
-//<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js">
 $script=<<<SCRI
-</script>
 <script>
-
-var footer = '<tr>\
-	<td><input name="author[]" type="text" placeholder="Input author\'s name" class="form-control" required /></td>\
-	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations" class="form-control" required ></td>\
-	<td><input name="presenting[]" type="checkbox" class="form-control" ></td>\
-	<td><input name="email[]" type="email" placeholder="Input author\'s email" class="form-control" required></td>\
-		</tr>';
-
 $(function(){
-	$("#addauthor").click(function(){
-		$("#addauthors").append(footer);
-			});
 
 
 		});
@@ -147,5 +149,4 @@ SCRI;
 ?>
 <?php
 include('footer.php');
- */
 ?>
