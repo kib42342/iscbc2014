@@ -1,10 +1,11 @@
 <?php
 include('header.php');
+
 ?>
 <div class='container' style='background-color:white' >
-<form method="POST" action="checkabs.php" id="absForm">
+<form method="POST" action="checkabs.php" id="absForm" enctype="multipart/form-data">
 <div class='row'>
-<h1 class='col-md-12 text-center'>Abstract guideline</h1>
+<h1 class='col-md-12 text-center'>Abstract Guideline</h1>
 </div>
 <em class='text-danger'>Abstract shall be written in English</em>
 <br />
@@ -18,36 +19,46 @@ include('header.php');
 		<th>E-mail</td>
 	</tr>
 <tr>
-<td><input name="author[]" type="text" placeholder="Input author's name" class="form-control" required /></td>
-<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations" class="form-control" required  /></td>
-<td><input name="presenting[]" type="checkbox" value="yes" class="form-control" required checked /></td>
-<td><input name="email[]" type="email" placeholder="Input author's email" class="form-control" required  /></td>
+<td><input name="author[]" type="text" placeholder="Input author's name" class="form-control" required maxlength="100"/></td>
+<td><input name="affiliations[]" type="text" placeholder="Input author's affiliations" class="form-control" required  maxlength="255" /></td>
+<td><input name="presenting_first" type="checkbox" value="yes" class="form-control" checked disabled /></td>
+<input name="presenting[]" type="hidden" value="yes" class="form-control" required /></td>
+<td><input name="email[]" type="email" placeholder="Input author's email" class="form-control" required maxlength="100" /></td>
 </tr>
 </table>
 
 
-<button type="button" class="btn btn-default btn-md btn-md-offset-11" id='addauthor' >
+<button type="button" class="btn btn-primary btn-md btn-md-offset-11" id='addauthor' >
   <span class="glyphicon glyphicon-plus"></span> Add more authors
+</button>
+<button type="button" class="btn btn-warning btn-md btn-md-offset-11" id='delauthor' >
+  <span class="glyphicon glyphicon-repeat"></span> Reset authors
 </button>
 <hr />
 <h4>Keywords:</h4>
 <div class="row">
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 1" class="form-control" required /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 2" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 3" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 4" class="form-control" /></div>
-	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 5" class="form-control" /></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 1" class="form-control" required maxlength="100"/></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 2" class="form-control"  maxlength="100"/></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 3" class="form-control"  maxlength="100"/></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 4" class="form-control"  maxlength="100"/></div>
+	<div class="col-md-2"><input name='keyword[]' type="text" placeholder="Keyword 5" class="form-control"  maxlength="100"/></div>
 </div>
 <hr />
-<div class="row">
-  <div class="col-md-2"><h4 class="text-right">Upload Abstract:</h4></div>
-  <div class="col-md-10"><input type="file" name='abstract_file' class="form-control" required ></div>
+<div class="form-group">
+ <div class="col-md-2 text-right">
+ <label for="abstract_file">
+Upload Abstract:
+</label>
 </div>
-
-
+  <div class="col-md-10"><input type="hidden" name="MAX_FILE_SIZE" value="5000" /><input type="file" name='abstract_file' required />
 <p class='text-danger'>
 ( PDF, less than 250 words. Acknowledgement for support etc. please attached at the end of the text in parenthesis )
 </p>
+</div>
+</div>
+
+
+
 <hr />
 <h4>Choice of presentation:</h4>
 <div class="row">
@@ -59,7 +70,7 @@ include('header.php');
 
 <h4 >Session of choice:</h4>
 <div class="row">
-	<div class="col-md-2"><p class='text-center'>1<sup>st</sup> choice:</p></div>
+	<div class="col-md-2"><p class='text-right'>1<sup>st</sup> choice:</p></div>
 	<div class="col-md-2"><select id="session1" class="form-control" name="session1">
 	<?php 
 $session=<<<SESSION
@@ -76,7 +87,7 @@ echo $session;
 </select></div>
 </div>
 <div class="row">
-	<div class="col-md-2"><p class='text-center'>2<sup>nd</sup> choice:</p></div>
+	<div class="col-md-2"><p class='text-right'>2<sup>nd</sup> choice:</p></div>
 	<div class="col-md-2"><select id="session2" class="form-control" name="session2">
 	<?php
 echo $session;
@@ -84,16 +95,16 @@ echo $session;
 </select></div>
 </div>
 <div class="row">
-	<div class="col-md-2"><p class='text-center'>3<sup>rd</sup> choice:</p></div>
+	<div class="col-md-2"><p class='text-right'>3<sup>rd</sup> choice:</p></div>
 	<div class="col-md-2"><select id="session3" class="form-control" name="session3">
 <?php
 echo $session;
 ?>
 </select></div>
 </div>
-<p class='text-danger'>Please notice that we can’t guarantee that the preferred choice is available. The Scientific committee reserves the right to assign it to a proper session or format of presentation.</p>
+<p class='text-danger'>Please notice that we can't guarantee that the preferred choice is available. The Scientific committee reserves the right to assign it to a proper session or format of presentation.</p>
 <div class="text-center">
-<input type="submit"  value='Submit' class="form-control" >
+<input type="submit"  value='Submit' class="form-control btn btn-primary" >
 
 </div>
 
@@ -108,23 +119,28 @@ echo $session;
 
 //<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js">
 $script=<<<SCRI
-</script>
 <script>
 
 var footer = '<tr>\
-	<td><input name="author[]" type="text" placeholder="Input author\'s name" class="form-control" /></td>\
-	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations" class="form-control"></td>\
+	<td><input name="author[]" type="text" placeholder="Input author\'s name" class="form-control" required /></td>\
+	<td><input name="affiliations[]" type="text" placeholder="Input author\'s affiliations" class="form-control" required /></td>\
 	<td><input name="presenting[]" type="checkbox" class="form-control" ></td>\
-	<td><input name="email[]" type="text" placeholder="Input author\'s email" class="form-control"></td>\
+	<td><input name="email[]" type="email" placeholder="Input author\'s email" class="form-control" required /></td>\
 		</tr>';
 
 $(function(){
-	$("#addauthor").click(function(){
-		$("#addauthors").append(footer);
-			});
+var x;
+x=$("#addauthors").html();
+$("#addauthor").click(function(){
+$("#addauthors").append(footer);
+});
+$("#delauthor").click(function(){
+$("#addauthors").html(x);
+});
 
 
-		});
+});
+
 </script>
 
 

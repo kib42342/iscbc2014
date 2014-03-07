@@ -19,16 +19,17 @@ include('header.php');
 <h4>PERSONAL INFORMATION</h4>
 <div class="form-group">
   <label class="col-md-2 text-right" for="inputfamilyname">Family Name: </label>
-  <div class="col-md-2"><input  type="text" name="familyname" class="form-control" placeholder="Family Name"></div>
+  <div class="col-md-2"><input  type="text" name="familyname" class="form-control" placeholder="Family Name" required></div>
 </div>
 <div class="form-group">
   <label class="col-md-2 text-right" for="inputfirstname">First Name: </label>
-  <div class="col-md-2"><input type="text" name="firstname" class="form-control" placeholder="First Name"></div>
+  <div class="col-md-2"><input type="text" name="firstname" class="form-control" placeholder="First Name" required></div>
 </div>
 <div class="form-group">
 	<label class="col-md-2 text-right" for="titles">Titles: </label>
 	<div class="col-md-2">
-	<select class="form-control" name="titles">
+	<select class="form-control" name="titles" required>
+		<option value=""></option>
 		<option value="Prof">Prof</option>
 		<option value="Assc Prof">Assc Prof</option>
 		<option value="Asst Prof">Asst Prof</option>
@@ -39,28 +40,28 @@ include('header.php');
 	</div>
 </div>
 <div class="form-group">
-  <label class="col-md-2 text-right" for="inputdegrees">Degrees: </label>
+  <label class="col-md-2 text-right" for="degrees">Degrees: </label>
 
   <div class="col-md-4">
 <label class="radio-inline">
-<input type="radio" name="degrees" class="form-control" value="PhD" checked >PhD
+<input type="radio" name="degrees" class="form-control" value="PhD" required>PhD
 </label>
 <label class="radio-inline">
-<input type="radio" name="degrees" class="form-control" value="MD">MD
+<input type="radio" name="degrees" class="form-control" value="MD" required>MD
 </label>
 <label class="radio-inline">
-<input type="radio" name="degrees" class="form-control" value="MS">MS
+<input type="radio" name="degrees" class="form-control" value="MS" required>MS
 </label>
 <label class="radio-inline">
-<input type="radio" name="degrees" class="form-control" value="BS">BS
+<input type="radio" name="degrees" class="form-control" value="BS" required>BS
 </label>
 <label class="radio-inline">
-<input type="radio" name="degrees" class="form-control" value="Others">Others
+<input type="radio" name="degrees" class="form-control" value="Others" required>Others
 </label>
 </div>
 </div>
 <div class="form-group">
-  <label class="col-md-2 text-right" for="institutionAffiliation">Institution/Affiliation: </label>
+  <label class="col-md-2 text-right" for="ia">Institution/Affiliation: </label>
   <div class="col-md-2"><input type="text" name="ia" class="form-control" placeholder="Institution/Affiliation"></div>
 </div>
 
@@ -69,10 +70,13 @@ include('header.php');
 
   <div class="col-md-4">
 <label class="radio-inline">
-<input type="radio" name="addrtype" class="form-control" value="Office" checked >Office
+<input type="radio" name="addrtype" class="form-control" value="Office" >Office
 </label>
 <label class="radio-inline">
 <input type="radio" name="addrtype" class="form-control" value="Home">Home
+</label>
+<label class="radio-inline">
+<input type="radio" name="addrtype" class="form-control" value="None" checked >None
 </label>
 </div>
 </div>
@@ -137,7 +141,7 @@ include('header.php');
 <input type="radio" name="pay" class="form-control" value="Postdoc">Postdoc: $6000 NT (equal to approximately 200 USD)
 </label><br />
 <label >
-<input type="radio" name="pay" class="form-control" value="Student">Student: $3000 NT (equal to approximately 100 USD)
+<input type="radio" name="pay" class="form-control" value="Student" >Student: $3000 NT (equal to approximately 100 USD)
 </label><br />
 <label >
 <input type="radio" name="pay" class="form-control" value="Traveling">Traveling fellowship
@@ -157,12 +161,17 @@ include('header.php');
 <hr />
 </div>
 </div>
-
-<label class="text-danger">Student please upload your photo ID (*.jpg,*.bmp,*.png; size < 150 KB)
-</label>
-<input type="file" name="photoid" >
+<div class="row" id="isstudent">
+<div class="col-md-10 col-md-offset-1" style="border:2px solid red">
+<p> </p>
+    <label class="text-danger" for="photoid">Student please upload your photo ID (*.jpg,*.bmp,*.png; size < 150 KB).</label>
+    <input type="file" id="photoid" name="photoid">
+<p> </p>
+</div>
+  </div>
+<p> </p>
 <div class="row">
-  <div class="col-md-12 text-center"><input type="submit" value="Submit"></div>
+  <div class="col-md-12 text-center"><input type="submit" name="submit" id="submit" value="Submit" class="form-control"></div>
 </div>
 </form>
 <br />
